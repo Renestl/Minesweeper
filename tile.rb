@@ -28,5 +28,15 @@ class Tile
 	end
 
 	def neighbor_bomb_count
+		bomb_count = 0
+
+		neighbors.each do |tile|
+			if tile.bombed
+				bomb_count += 1
+			end
+		end
+
+		p bomb_count
 	end	
+
 end
