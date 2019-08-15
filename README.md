@@ -13,3 +13,14 @@ Based on [Minesweeper](http://minesweeperonline.com/#beginner) ([wiki](https://e
 ```
 ruby minesweeper.rb
 ```
+
+## Game Play
+* `U` for unexplored squares
+* `_` for "interior" squares when exploring
+* a one-digit number for "fringe" squares
+* `F` for flagged spots
+* `*` for bombs
+
+Prefix 
+`r 1,3` to reveal row 1, column 3 square
+`f 1,3` to flag row 1, column 3 square
