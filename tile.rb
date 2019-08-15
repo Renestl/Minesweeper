@@ -14,6 +14,13 @@ class Tile
 		@position = position
 	end
 
+	def place_bomb
+		@bombed = true
+	end
+
+	def place_flag
+		@flagged = true
+	end
 
 	def neighbors
 		neighbors = []
