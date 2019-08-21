@@ -37,6 +37,20 @@ class Tile
 
 		string
 	end
+
+	def safe_tile
+		string = ""
+		num_bombs = neighbor_bomb_count
+
+		if num_bombs == 0
+			string = "-"
+		else
+			string = num_bombs.to_s
+		end
+
+		string
+	end
+
 	def neighbors
 		neighbors = []
 
