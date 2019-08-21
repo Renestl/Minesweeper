@@ -14,6 +14,13 @@ class Tile
 		@position = position
 	end
 
+	def reveal
+		unless @revealed
+			@revealed = true
+			
+		end
+	end
+
 	def place_bomb
 		@bombed = true
 	end

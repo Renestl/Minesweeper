@@ -5,7 +5,7 @@ class Board
 
 	def initialize(size = 4)
 		@size = size
-
+		
 		populate_grid
 	end
 
@@ -16,24 +16,41 @@ class Board
 			end
 		end
 
-		# populate_bombs
+		populate_bombs
 	end
 
-
 	def populate_bombs
-		bombs = @size * 0.20
+		bombs = (@size * @size) * 0.25
+		num_bombs = 0
 
-		while self.num_bombs < bombs
+		while num_bombs < bombs
 			rand_row = rand(0...@grid.length)
 			rand_col = rand(0...@grid.length)
-			rand_position = [rand_row, rand_col]
 
-			self[rand_position] = :*
+			@grid[rand_row][rand_col].place_bomb
+
+			num_bombs += 1
 		end
 	end
 
-	def num_bombs
-		@grid.flatten.count(:*)
+	def render_board
+		display = []
+
+		grid.each do |row|
+			row.each do |tile|
+				if tile.flagged
+					display << "F"
+				elsif tile.revealed
+					display << (tile.bombed ? "B" : tile.neighbor_bomb_count)
+				else
+					display << "* "
+				end
+			end
+			display << "\n"
+		end
+
+		puts display.join("")
+
 	end
 
 	def [](board_position)
