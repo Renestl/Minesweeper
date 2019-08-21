@@ -22,6 +22,21 @@ class Tile
 		@flagged = true
 	end
 
+	def to_s
+		string = ""
+
+		if @bombed && @revealed
+			string = "B"
+		elsif !@bombed && @revealed
+			string = safe_tile
+		elsif @flagged
+			string = "F"
+		else
+			string = "*"
+		end
+
+		string
+	end
 	def neighbors
 		neighbors = []
 
