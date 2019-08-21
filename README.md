@@ -15,11 +15,11 @@ ruby minesweeper.rb
 ```
 
 ## Game Play
-* `U` for unexplored squares
+* `*` for unexplored squares
 * `_` for "interior" squares when exploring
 * a one-digit number for "fringe" squares
 * `F` for flagged spots
-* `*` for bombs
+* `B` for bombs
 
 Prefix 
 `r 1,3` to reveal row 1, column 3 square
