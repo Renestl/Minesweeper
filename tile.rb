@@ -24,17 +24,32 @@ class Tile
 		@bombed = true
 	end
 
-	# def inspect
-	# 	{
-	# 		'bombed' => @bombed,
-	# 		'flagged' => @flagged,
-	# 		'revealed' => @revealed
-	# 	}.inspect
-	# end
+	def inspect
+		{
+			'bombed' => @bombed,
+			'flagged' => @flagged,
+			'revealed' => @revealed,
+			'position' => @position
+		}.inspect
+	end
 
 	def neighbors
+		neighbors_arr = []
+
+		 NEIGHBOR_DIRECTIONS.map do |direction|
+			neighbors_arr << [position[0] + direction[0], position[1] + direction[1]]	
+		end
+		
+		neighbors_arr.select do |row, col|
+			[row, col].all? do |coord|
+				coord.between?(0, @board.grid_size - 1)
+			end
+		end
+
+		neighbors_arr.map { |pos| @board[pos] }
 	end
 
 	def neighbor_bomb_count
+
 	end
 end
