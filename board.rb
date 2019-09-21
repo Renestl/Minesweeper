@@ -40,4 +40,12 @@ class Board
 		end
 	end
 	
+	def render_board
+		@grid.map do |row|
+			row.map do |tile|
+				tile.reveal_tile
+			end.join("")
+		end.join("\n")
+	end
+	
 end
