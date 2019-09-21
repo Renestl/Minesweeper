@@ -40,16 +40,18 @@ class Tile
 			neighbors_arr << [position[0] + direction[0], position[1] + direction[1]]	
 		end
 		
-		neighbors_arr.select do |row, col|
+		neighbors = neighbors_arr.select do |row, col|
 			[row, col].all? do |coord|
 				coord.between?(0, @board.grid_size - 1)
 			end
 		end
 
-		neighbors_arr.map { |pos| @board[pos] }
+		neighbors.map { |pos| @board[pos] }
 	end
 
 	def neighbor_bomb_count
+		neighbors.select(&:bombed?).count
+	end
 
 	end
 end
