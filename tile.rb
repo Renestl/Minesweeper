@@ -36,7 +36,7 @@ class Tile
 	def neighbors
 		neighbors_arr = []
 
-		 NEIGHBOR_DIRECTIONS.map do |direction|
+		NEIGHBOR_DIRECTIONS.map do |direction|
 			neighbors_arr << [position[0] + direction[0], position[1] + direction[1]]	
 		end
 		
@@ -53,5 +53,15 @@ class Tile
 		neighbors.select(&:bombed?).count
 	end
 
+	def reveal_tile
+		if flagged?
+			"F"
+		elsif revealed?
+			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s
+		else
+			"*"
+		end
 	end
+
+
 end
