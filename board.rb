@@ -14,15 +14,21 @@ class Board
 		@grid[row][col]
 	end
 
-	def populate_grid
-		@grid = Array.new(@grid_size) do |row|
-			Array.new(@grid_size) do |col|
-				Tile.new(self, [row, col])
-			end
-		end
-
-		seed_bombs
+	def render_board
+		@grid.map do |row|
+			row.map do |tile|
+				tile.reveal_tile
+			end.join("")
+		end.join("\n")
 	end
+
+	def won?
+	end
+
+	def lost?
+	end
+
+	private
 
 	def seed_bombs
 		num_bombs = 0
@@ -39,13 +45,15 @@ class Board
 			end
 		end
 	end
-	
-	def render_board
-		@grid.map do |row|
-			row.map do |tile|
-				tile.reveal_tile
-			end.join("")
-		end.join("\n")
+
+	def populate_grid
+		@grid = Array.new(@grid_size) do |row|
+			Array.new(@grid_size) do |col|
+				Tile.new(self, [row, col])
+			end
+		end
+
+		seed_bombs
 	end
 	
 end
