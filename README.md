@@ -18,9 +18,10 @@ ruby minesweeper.rb
 * `*` for unexplored squares
 * `_` for "interior" squares when exploring
 * a one-digit number for "fringe" squares
+* `R` to reveal tile
 * `F` for flagged spots
 * `B` for bombs
 
 Prefix 
-`r 1,3` to reveal row 1, column 3 square
-`f 1,3` to flag row 1, column 3 square
+`R,1,3` to reveal row 1, column 3 square
+`R,1,3` to flag row 1, column 3 square
