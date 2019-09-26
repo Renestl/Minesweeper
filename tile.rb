@@ -24,6 +24,30 @@ class Tile
 		@bombed = true
 	end
 
+	def revealed
+		return self if flagged?
+		return self if revealed?
+
+		@revealed = true
+		
+		#result if tile not bombed && neighbor_bomb_count == 0
+		#look at list of neighbors and do the same result
+	end
+
+	def toggle_flag
+		@flagged = true
+	end
+
+	def reveal_tile
+		if flagged?
+			"F"
+		elsif revealed?
+			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s
+		else
+			"*"
+		end
+	end
+
 	def inspect
 		{
 			'bombed' => @bombed,
@@ -52,16 +76,5 @@ class Tile
 	def neighbor_bomb_count
 		neighbors.select(&:bombed?).count
 	end
-
-	def reveal_tile
-		if flagged?
-			"F"
-		elsif revealed?
-			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s
-		else
-			"*"
-		end
-	end
-
 
 end
