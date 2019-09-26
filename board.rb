@@ -3,7 +3,7 @@ require_relative 'tile'
 class Board
 	attr_reader :grid_size
 
-	def initialize(grid_size = 4)
+	def initialize(grid_size = 9)
 		@grid_size = grid_size
 
 		populate_grid
@@ -18,21 +18,30 @@ class Board
 		@grid.map do |row|
 			row.map do |tile|
 				tile.reveal_tile
+				# render_end_board ? tile.revealed : tile.reveal_tile
 			end.join("")
 		end.join("\n")
 	end
 
+	def render_end_board
+		# Shows all tiles when game over
+
+		#set all tiles revealed = true
+	end
+
 	def won?
+		#opposite of lost?
 	end
 
 	def lost?
+		# if tile revealed? && bombed?, game over
 	end
 
 	private
 
 	def seed_bombs
 		num_bombs = 0
-		bombs = (@grid_size * @grid_size) * 0.25
+		bombs = (@grid_size * @grid_size) / 4
 
 		while num_bombs < bombs
 			rand_position = Array.new(2) { rand(@grid_size)}
