@@ -3,8 +3,9 @@ require_relative 'tile'
 class Board
 	attr_reader :grid_size
 
-	def initialize(grid_size = 9)
+	def initialize(grid_size, num_bombs)
 		@grid_size = grid_size
+		@num_bombs = num_bombs
 
 		populate_grid
 	end
@@ -40,17 +41,16 @@ class Board
 	private
 
 	def seed_bombs
-		num_bombs = 0
-		bombs = (@grid_size * @grid_size) / 4
+		bombs_planted = 0
 
-		while num_bombs < bombs
+		while bombs_planted < @num_bombs
 			rand_position = Array.new(2) { rand(@grid_size)}
 
 			tile = self[rand_position]
 
 			if !tile.bombed?
 				tile.place_bomb
-				num_bombs += 1
+				bombs_planted += 1
 			end
 		end
 	end

@@ -3,12 +3,13 @@ require_relative 'board'
 class MinesweeperGame
 	BOARD_SIZES = {
 		easy: {grid_size: 9, num_bombs: 10},
-		medium: {grid_size: },
-		hard: {grid_size: }
+		medium: {grid_size: 16, num_bombs: 40},
+		hard: {grid_size: 25, num_bombs: 99}
 	}
 
-	def initialize
-		@board = Board.new
+	def initialize(size = :easy)
+		board_size = BOARD_SIZES[size]
+		@board = Board.new(board_size[:grid_size], board_size[:num_bombs])
 	end
 
 	def play
