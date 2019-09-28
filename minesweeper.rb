@@ -24,8 +24,16 @@ class MinesweeperGame
 		#if lost, board.render_end_board
 	end
 
-	def get_move
-		action, row_pos, col_pos = gets.chomp.split(",")
+	private
+
+		def get_move
+		action, row_pos, col_pos = nil, nil, nil
+
+		until valid_action(action) && valid_position([row_pos.to_i, col_pos.to_i])
+			puts "Please enter an action (r for reveal, f for flag) and a position (e.g. r, 1, 0)"
+			action, row_pos, col_pos = gets.chomp.split(",")
+		end
+	
 		[action.downcase, [row_pos.to_i, col_pos.to_i]]
 	end
 
@@ -39,8 +47,16 @@ class MinesweeperGame
 		end
 	end
 
-	private
+	def valid_action(action)
+		action == "r" || action == "f"
+	end
 
-	
+	def valid_position(position)
+		row_pos, col_pos = position
+
+		position.is_a?(Array) && 
+			position.length == 2 &&
+		  position.all? { |x| x.between?(0, @board.grid_size - 1)}
+	end
 
 end
