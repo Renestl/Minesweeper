@@ -13,15 +13,19 @@ class MinesweeperGame
 	end
 
 	def play
-		# until @board.won? || @board.lost?
+		until @board.won? || @board.lost?
 			puts @board.render_board
 
 			choice, position = get_move
 			take_turn(choice, position)
-		# end
+		end
 
-		#determine if board won or lost
-		#if lost, board.render_end_board
+		if @board.won?
+			puts "You Win!"
+		elsif @board.lost?
+			puts "Bomb Activated, Game Over!"
+			puts @board.render_end_board
+		end
 	end
 
 	private

@@ -32,19 +32,37 @@ class Tile
 		
 		#result if tile not bombed && neighbor_bomb_count == 0
 		#look at list of neighbors and do the same result
+
+		if !bombed? && neighbor_bomb_count == 0
+			neighbors.each(&:revealed)
+		end
 	end
 
 	def toggle_flag
-		@flagged = true
+		@flagged = !@flagged unless revealed?
 	end
 
 	def reveal_tile
+		# reveal tile when selected by player
 		if flagged?
 			"F"
 		elsif revealed?
 			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s
 		else
 			"*"
+		end
+	end
+
+	def show_all
+		# show full board when game ends
+		if flagged?
+			# Mark actual flagged bombs vs false bombs
+			bombed? ? "F" : "f"
+		elsif bombed?
+			# "X" marks hit bomb
+			revealed? ? "X" : "B"
+		else
+			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s
 		end
 	end
 

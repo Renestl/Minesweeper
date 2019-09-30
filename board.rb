@@ -15,34 +15,32 @@ class Board
 		@grid[row][col]
 	end
 
-	def render_board
+	def render_board(show_all = false)
 		@grid.map do |row|
 			row.map do |tile|
-				tile.reveal_tile
-				# render_end_board ? tile.revealed : tile.reveal_tile
+				show_all ? tile.show_all : tile.reveal_tile
 			end.join("")
 		end.join("\n")
 	end
 
 	def render_end_board
 		# Shows all tiles when game over
-
-		#set all tiles revealed = true
+		render_board(true)
 	end
 
 	def won?
-		#opposite of lost?
+		@grid.flatten.all? { |tile| tile.revealed? != tile.bombed? }
 	end
 
 	def lost?
-		# if tile revealed? && bombed?, game over
+		@grid.flatten.any? { |tile| tile.bombed? && tile.revealed?}
 	end
 
 	private
 
 	def seed_bombs
 		bombs_planted = 0
-
+		
 		while bombs_planted < @num_bombs
 			rand_position = Array.new(2) { rand(@grid_size)}
 
