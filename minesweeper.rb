@@ -1,3 +1,4 @@
+require 'yaml'
 require_relative 'board'
 
 class MinesweeperGame
@@ -30,25 +31,37 @@ class MinesweeperGame
 
 	private
 
-		def get_move
+	def get_move
 		action, row_pos, col_pos = nil, nil, nil
 
-		until valid_action(action) && valid_position([row_pos.to_i, col_pos.to_i])
-			puts "Please enter an action (r for reveal, f for flag) and a position (e.g. r, 1, 0)"
-			action, row_pos, col_pos = gets.chomp.split(",")
-		end
+		puts "Please enter an action (r to reveal, f to flag) and a position (e.g. r, 1, 0)"
+
+		if gets[0].chomp.to_s == "s"
+			save_game
+			play
+		else
+			until valid_action(action) && valid_position([row_pos.to_i, col_pos.to_i])
+				puts "Please enter an action (r to reveal, f to flag) and a position (e.g. r, 1, 0)"
+				action, row_pos, col_pos = gets.chomp.split(",")
+			end
 	
-		[action.downcase, [row_pos.to_i, col_pos.to_i]]
+			[action.downcase, [row_pos.to_i, col_pos.to_i]]
+		end
 	end
 
 	def take_turn(choice, position)
 		tile = @board[position]
 
-		if choice == 'f'
+		case choice
+		when 'f'
 			tile.toggle_flag
-		else choice == 'r'
+		when 'r'
 			tile.revealed
 		end
+	end
+
+	def save_game
+		puts "Saved!"
 	end
 
 	def valid_action(action)
