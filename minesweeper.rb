@@ -62,5 +62,11 @@ class MinesweeperGame
 			position.length == 2 &&
 		  position.all? { |x| x.between?(0, @board.grid_size - 1)}
 	end
+end
 
+if __FILE__ == $PROGRAM_NAME 
+	puts "Enter game level:"
+	size = gets.chomp.to_sym
+	
+	game = MinesweeperGame.new(size).play
 end
