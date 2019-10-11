@@ -41,7 +41,7 @@ class MinesweeperGame
 			play
 		else
 			until valid_action(action) && valid_position([row_pos.to_i, col_pos.to_i])
-				puts "Please enter an action (r to reveal, f to flag) and a position (e.g. r, 1, 0)"
+				puts "Please enter an action (r to reveal, f to flag) and a position (e.g. r,1,0)"
 				action, row_pos, col_pos = gets.chomp.split(",")
 			end
 	
@@ -61,7 +61,10 @@ class MinesweeperGame
 	end
 
 	def save_game
-		puts "Saved!"
+		puts "Please enter filename to save game at:"
+		filename =  gets.chomp
+		File.write(filename, YAML.dump(self))
+		puts "Game saved to #{filename}!"
 	end
 
 	def valid_action(action)
