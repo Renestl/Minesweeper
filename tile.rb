@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Tile	
 	NEIGHBOR_DIRECTIONS = [[-1,-1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
 
@@ -6,6 +8,7 @@ class Tile
 	def initialize(board, position)
 		@board, @position = board, position
 		@bombed, @flagged, @revealed = false, false, false
+		@colors = [:light_blue, :green, :red, :cyan, :yellow, :light_black]
 	end
 
 	def bombed?
@@ -45,9 +48,9 @@ class Tile
 	def reveal_tile
 		# reveal tile when selected by player
 		if flagged?
-			"F"
+			"F".colorize(:light_red)
 		elsif revealed?
-			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s
+			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s.colorize(@colors[neighbor_bomb_count - 1])
 		else
 			"*"
 		end
@@ -57,12 +60,12 @@ class Tile
 		# show full board when game ends
 		if flagged?
 			# Mark actual flagged bombs vs false bombs
-			bombed? ? "F" : "f"
+			bombed? ? "F".colorize(:light_red) : "f"
 		elsif bombed?
 			# "X" marks hit bomb
-			revealed? ? "X" : "B"
+			revealed? ? "X".colorize(:magenta) : "B".colorize(:magenta)
 		else
-			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s
+			neighbor_bomb_count == 0 ? "_" : neighbor_bomb_count.to_s.colorize(@colors[neighbor_bomb_count - 1])
 		end
 	end
 
