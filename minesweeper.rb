@@ -1,3 +1,4 @@
+require 'yaml'
 require_relative 'board'
 
 class MinesweeperGame
@@ -30,25 +31,39 @@ class MinesweeperGame
 
 	private
 
-		def get_move
-		action, row_pos, col_pos = nil, nil, nil
+	def get_move
+		puts "Please enter an action (r to reveal, f to flag) and a position (e.g. r, 1, 0)"
+		action, row_pos, col_pos = gets.chomp.split(",")
 
-		until valid_action(action) && valid_position([row_pos.to_i, col_pos.to_i])
-			puts "Please enter an action (r for reveal, f for flag) and a position (e.g. r, 1, 0)"
-			action, row_pos, col_pos = gets.chomp.split(",")
-		end
+		if action.to_s == "s"
+			save_game
+			play
+		else
+			until valid_action(action) && valid_position([row_pos.to_i, col_pos.to_i])
+				puts "Please enter an action (r to reveal, f to flag) and a position (e.g. r,1,0)"
+				action, row_pos, col_pos = gets.chomp.split(",")
+			end
 	
-		[action.downcase, [row_pos.to_i, col_pos.to_i]]
+			[action.downcase, [row_pos.to_i, col_pos.to_i]]
+		end
 	end
 
 	def take_turn(choice, position)
 		tile = @board[position]
 
-		if choice == 'f'
+		case choice
+		when 'f'
 			tile.toggle_flag
-		else choice == 'r'
+		when 'r'
 			tile.revealed
 		end
+	end
+
+	def save_game
+		puts "Please enter filename to save game at:"
+		filename =  gets.chomp
+		File.write(filename, YAML.dump(self))
+		puts "Game saved to #{filename}!"
 	end
 
 	def valid_action(action)
@@ -62,5 +77,16 @@ class MinesweeperGame
 			position.length == 2 &&
 		  position.all? { |x| x.between?(0, @board.grid_size - 1)}
 	end
+end
 
+if __FILE__ == $PROGRAM_NAME 
+	case ARGV.count
+	when 0
+		puts "Enter game level:"
+		size = gets.chomp.to_sym
+	
+		game = MinesweeperGame.new(size).play
+	when 1
+		YAML.load(File.read(ARGV.shift)).play
+	end
 end

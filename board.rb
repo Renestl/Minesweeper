@@ -19,7 +19,7 @@ class Board
 		@grid.map do |row|
 			row.map do |tile|
 				show_all ? tile.show_all : tile.reveal_tile
-			end.join("")
+			end.join(" ")
 		end.join("\n")
 	end
 
