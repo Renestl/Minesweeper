@@ -32,11 +32,10 @@ class MinesweeperGame
 	private
 
 	def get_move
-		action, row_pos, col_pos = nil, nil, nil
-
 		puts "Please enter an action (r to reveal, f to flag) and a position (e.g. r, 1, 0)"
+		action, row_pos, col_pos = gets.chomp.split(",")
 
-		if gets[0].chomp.to_s == "s"
+		if action.to_s == "s"
 			save_game
 			play
 		else
