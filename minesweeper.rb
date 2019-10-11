@@ -81,8 +81,13 @@ class MinesweeperGame
 end
 
 if __FILE__ == $PROGRAM_NAME 
-	puts "Enter game level:"
-	size = gets.chomp.to_sym
+	case ARGV.count
+	when 0
+		puts "Enter game level:"
+		size = gets.chomp.to_sym
 	
-	game = MinesweeperGame.new(size).play
+		game = MinesweeperGame.new(size).play
+	when 1
+		YAML.load(File.read(ARGV.shift)).play
+	end
 end
